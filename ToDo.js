@@ -5,12 +5,7 @@ class ToDo {
         this.tasksContainer = null
 
         this.isLoading = false
-        this.tasks = [
-            {
-                taskName: 'Wynieś śmieci',
-                isCompleted: false
-            }
-        ]
+        this.tasks = []
     }
 
     toggleCompleted(taskIndex) {
@@ -44,7 +39,7 @@ class ToDo {
         )
 
 
-   
+
         return taskElement
     }
 
@@ -74,5 +69,16 @@ class ToDo {
         this.mainContainerElement.appendChild(this.tasksContainer)
 
         this.render()
+    }
+
+    saveToDb() {
+        const data = JSON.stringify(this.tasks)
+        fetch(
+            'https://js5days-day-5-js.firebaseio.com/js5day2.json',
+            {
+                method: 'PUT',
+                body: data
+            }
+        )
     }
 }
