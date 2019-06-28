@@ -98,6 +98,7 @@ class ToDo {
     setState(propName, newValue){
         this[propName] = newValue
 
+        this.chart.updateTasks(this.tasks)
         this.saveToDb()
         this.render()
     }
