@@ -16,10 +16,11 @@ class Counter {
         const headerElement = document.createElement('h1')
         const btnElement = document.createElement('button')
         btnElement.addEventListener(
-            'click',
+            'click', 
+            // () => this.inc() ***arrow function ***
            (function () {
                this.inc()
-           }).bind(this) 
+           }).bind(this) // bind call context
         )
 
         headerElement.innerText = this.number
