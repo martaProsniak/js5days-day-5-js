@@ -11,14 +11,27 @@ class ToDo {
                 isCompleted: false
             }
         ]
-
-        this.init()
     }
 
     renderTask(taskName, isCompleted){
         const taskElement = document.createElement('div')
 
         taskElement.innerText = taskName
+
+        if(isCompleted){
+            taskElement.style.textDecoration = 'line-through'
+        }
+
+        taskElement.addEventListener(
+            'click',
+            () => { this.toggleCompleted() }
+        )
+        
+        taskElement.addEventListener(
+            'dblclick',
+            () => { this.deleteTask() }
+        )
+
 
         return taskElement
     }
