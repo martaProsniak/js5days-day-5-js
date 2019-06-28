@@ -3,11 +3,27 @@ class ToDo {
         this.mainContainerElement = document.querySelector(selector)
         this.uiContainer = null //good practice to declare variables in constructor
         this.tasksContainer = null
-
+        
+        this.chart = null
+        
         this.isLoading = false
         this.tasks = []
     }
-
+    
+    init() {
+        this.chartContainer = document.createElement('div')
+        this.uiContainer = document.createElement('div')
+        this.tasksContainer = document.createElement('div')
+        this.mainContainerElement.appendChild(this.chartContainer)
+        this.mainContainerElement.appendChild(this.uiContainer)
+        this.mainContainerElement.appendChild(this.tasksContainer)
+        
+        this.chart = new CustomChart(this.chartContainer)
+        
+        this.makeUI()
+        this.loadFromDb()
+        this.render()
+    }
     toggleCompleted(taskIndex) {
         const task = this.tasks[taskIndex]
         task.isCompleted = !task.isCompleted
@@ -63,16 +79,6 @@ class ToDo {
         }
     }
 
-    init() {
-        this.uiContainer = document.createElement('div')
-        this.tasksContainer = document.createElement('div')
-        this.mainContainerElement.appendChild(this.uiContainer)
-        this.mainContainerElement.appendChild(this.tasksContainer)
-        
-        this.loadFromDb()
-        this.makeUI()
-        this.render()
-    }
 
    makeUI(){
         const input = document.createElement('input')
