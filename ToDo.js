@@ -13,6 +13,7 @@ class ToDo {
         task.isCompleted = !task.isCompleted
         this.setState('tasks', this.tasks)
     }
+
     deleteTask(taskIndex) {
         const newTasks = this.tasks.filter((task, index) => index !== taskIndex) // filter tasks and create new task table
         this.setState('tasks', newTasks)
@@ -45,7 +46,6 @@ class ToDo {
 
     render() {
         this.tasksContainer.innerText = ''
-        this.saveToDb() // most convenient place to call this method
 
         if (this.isLoading) {
             this.tasksContainer.innerText = 'Loading...'
@@ -70,23 +70,29 @@ class ToDo {
         this.mainContainerElement.appendChild(this.tasksContainer)
         
         this.loadFromDb()
+        this.makeUI()
         this.render()
     }
 
-    makeUI(){
-        const input 
-        const btn 
+   makeUI(){
+        const input = document.createElement('input')
+        const btn  = document.createElement('button')
 
         btn.innerText = 'Add task'
-        input.addEventListener(
-            
+        btn.addEventListener(
+            'click',
+            () => {
+                this.addTask(input.value)
+            }
         )
+        this.uiContainer.appendChild(input)
+        this.uiContainer.appendChild(btn)
     }
 
     setState(propName, newValue){
         this[propName] = newValue
 
-        this.saveToDb
+        this.saveToDb()
         this.render()
     }
 
@@ -117,6 +123,5 @@ class ToDo {
             isCompleted: false
         })
         this.setState('tasks', newTasks)
-        this.saveToDb()
     }
 }
