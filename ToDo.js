@@ -11,11 +11,11 @@ class ToDo {
     toggleCompleted(taskIndex) {
         const task = this.tasks[taskIndex]
         task.isCompleted = !task.isCompleted
-        this.render()
+        this.setState('tasks', this.tasks)
     }
     deleteTask(taskIndex) {
-        this.tasks = this.tasks.filter((task, index) => index !== taskIndex) // filter tasks and create new task table
-        this.render()
+        const newTasks = this.tasks.filter((task, index) => index !== taskIndex) // filter tasks and create new task table
+        this.setState('tasks', newTasks)
     }
 
 
@@ -45,6 +45,7 @@ class ToDo {
 
     render() {
         this.tasksContainer.innerText = ''
+        this.saveToDb() // most convenient place to call this method
 
         if (this.isLoading) {
             this.tasksContainer.innerText = 'Loading...'
@@ -72,12 +73,30 @@ class ToDo {
         this.render()
     }
 
+    makeUI(){
+        const input 
+        const btn 
+
+        btn.innerText = 'Add task'
+        input.addEventListener(
+            
+        )
+    }
+
+    setState(propName, newValue){
+        this[propName] = newValue
+
+        this.saveToDb
+        this.render()
+    }
+
     loadFromDb(){
+        this.setState('isLoading', true)
         fetch('https://js5days-day-5-js.firebaseio.com/js5day2.json')
         .then(response => response.json())
         .then(value => {
-            this.tasks = value
-            this.render()
+            this.setState('tasks', value || [])
+            this.setState('isLoading', false)
         })
     }
 
@@ -90,5 +109,14 @@ class ToDo {
                 body: data
             }
         )
+    }
+
+    addTask(newTaskName){
+        const newTasks = this.tasks.concat ({
+            taskName: newTaskName,
+            isCompleted: false
+        })
+        this.setState('tasks', newTasks)
+        this.saveToDb()
     }
 }
