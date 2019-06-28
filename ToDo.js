@@ -67,8 +67,18 @@ class ToDo {
         this.tasksContainer = document.createElement('div')
         this.mainContainerElement.appendChild(this.uiContainer)
         this.mainContainerElement.appendChild(this.tasksContainer)
-
+        
+        this.loadFromDb()
         this.render()
+    }
+
+    loadFromDb(){
+        fetch('https://js5days-day-5-js.firebaseio.com/js5day2.json')
+        .then(response => response.json())
+        .then(value => {
+            this.tasks = value
+            this.render()
+        })
     }
 
     saveToDb() {
