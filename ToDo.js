@@ -13,22 +13,23 @@ class ToDo {
         ]
     }
 
-    toggleCompleted(taskIndex){
+    toggleCompleted(taskIndex) {
         const task = this.tasks[taskIndex]
         task.isCompleted = !task.isCompleted
         this.render()
     }
-    deleteTask(taskIndex){
-        console.log(taskIndex)
+    deleteTask(taskIndex) {
+        this.tasks = this.tasks.filter((task, index) => index !== taskIndex) // filter tasks and create new task table
+        this.render()
     }
 
 
-    renderTask(taskName, isCompleted, taskIndex){
+    renderTask(taskName, isCompleted, taskIndex) {
         const taskElement = document.createElement('div')
 
         taskElement.innerText = taskName
 
-        if(isCompleted){
+        if (isCompleted) {
             taskElement.style.textDecoration = 'line-through'
         }
 
@@ -36,27 +37,28 @@ class ToDo {
             'click',
             () => { this.toggleCompleted(taskIndex) }
         )
-        
+
         taskElement.addEventListener(
             'dblclick',
             () => { this.deleteTask(taskIndex) }
         )
 
 
+   
         return taskElement
     }
-    
-    render(){
+
+    render() {
         this.tasksContainer.innerText = ''
 
-        if (this.isLoading){
+        if (this.isLoading) {
             this.tasksContainer.innerText = 'Loading...'
             return
         }
-        if (this.tasks.length === 0){
+        if (this.tasks.length === 0) {
             this.tasksContainer.innerText = 'No tasks!'
         }
-        for (let i = 0; i < this.tasks.length; i++){
+        for (let i = 0; i < this.tasks.length; i++) {
             const task = this.tasks[i]
             const taskName = task.taskName
             const isCompleted = task.isCompleted
@@ -64,8 +66,8 @@ class ToDo {
             this.tasksContainer.appendChild(item)
         }
     }
-    
-    init(){
+
+    init() {
         this.uiContainer = document.createElement('div')
         this.tasksContainer = document.createElement('div')
         this.mainContainerElement.appendChild(this.uiContainer)
