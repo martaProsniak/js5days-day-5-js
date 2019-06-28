@@ -104,12 +104,12 @@ class ToDo {
     }
 
     loadFromDb(){
-        this.setState('isLoading', true)
+        this.isLoading = true;
         fetch('https://js5days-day-5-js.firebaseio.com/js5day2.json')
         .then(response => response.json())
         .then(value => {
+            this.isLoading = false;
             this.setState('tasks', value || [])
-            this.setState('isLoading', false)
         })
     }
 
