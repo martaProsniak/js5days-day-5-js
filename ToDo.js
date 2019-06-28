@@ -13,7 +13,17 @@ class ToDo {
         ]
     }
 
-    renderTask(taskName, isCompleted){
+    toggleCompleted(taskIndex){
+        const task = this.tasks[taskIndex]
+        task.isCompleted = !task.isCompleted
+        this.render()
+    }
+    deleteTask(taskIndex){
+        console.log(taskIndex)
+    }
+
+
+    renderTask(taskName, isCompleted, taskIndex){
         const taskElement = document.createElement('div')
 
         taskElement.innerText = taskName
@@ -24,12 +34,12 @@ class ToDo {
 
         taskElement.addEventListener(
             'click',
-            () => { this.toggleCompleted() }
+            () => { this.toggleCompleted(taskIndex) }
         )
         
         taskElement.addEventListener(
             'dblclick',
-            () => { this.deleteTask() }
+            () => { this.deleteTask(taskIndex) }
         )
 
 
@@ -50,7 +60,7 @@ class ToDo {
             const task = this.tasks[i]
             const taskName = task.taskName
             const isCompleted = task.isCompleted
-            const item = this.renderTask(taskName, isCompleted)
+            const item = this.renderTask(taskName, isCompleted, i)
             this.tasksContainer.appendChild(item)
         }
     }
