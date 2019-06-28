@@ -1,29 +1,37 @@
 class Counter {
-    constructor(){
+    constructor(selector) {
         this.number = 0
-        // function render() is inside of Counter class -> must be called with keyword this
+        this.containerElement = document.querySelector(selector)
         this.render()
     }
 
-    inc(){
+    inc() {
         this.number++
+        this.render()
     }
 
-    render(){
+    render() {
+        this.containerElement.innerText = ''
+
         const headerElement = document.createElement('h1')
         const btnElement = document.createElement('button')
+        btnElement.addEventListener(
+            'click',
+           (function () {
+               this.inc()
+           }).bind(this) 
+        )
 
         headerElement.innerText = this.number
         btnElement.innerText = '+'
 
-        document.body.appendChild(headerElement)
-        document.body.appendChild(btnElement)
-
+        this.containerElement.appendChild(headerElement)
+        this.containerElement.appendChild(btnElement)
     }
 }
-
-const counter1 = new Counter()
-const counter2 = new Counter()
+// calling constructor
+const counter1 = new Counter('.counter1')
+const counter2 = new Counter('.counter2')
 console.log(counter1)
 console.log(counter2)
 
