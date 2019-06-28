@@ -118,6 +118,10 @@ class ToDo {
     }
 
     addTask(newTaskName){
+        if(!newTaskName){
+            alert('Enter task name!')
+            return
+        }
         const newTasks = this.tasks.concat ({
             taskName: newTaskName,
             isCompleted: false
